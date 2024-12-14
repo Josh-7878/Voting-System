@@ -9,14 +9,14 @@ GUI model for the Voting Systems
 
 class MainApplication(tk.Tk):
     """
-    Main GUI application for the Voting Systems
+    Main GUI application for the Voting Systems.
     """
     def __init__(self, controller: ElectionController):
         super().__init__()
         self.controller = controller
 
         self.title('Voting System')
-        self.geometry('400x300')
+        self.geometry('300x400')
 
         tk.Label(self, text="Vote for a Candidate", font=("Arial", 16)).pack(pady=10)
 
@@ -28,9 +28,15 @@ class MainApplication(tk.Tk):
         results_button = tk.Button(self, text="Show Results", command=self.show_results)
         results_button.pack(pady=10)
 
+        #Reveals the winner and total votes
+        winner_button = tk.Button(self, text="Show Winner", command=self.show_winner)
+        winner_button.pack(pady=5)
+
         # Added a reset button
         reset_button = tk.Button(self, text="Reset Votes", command=self.reset_votes)
         reset_button.pack(pady=10)
+
+
 
     def vote(self, candidate_name: str)-> None: #Confirms the users vote
         try:
@@ -42,6 +48,16 @@ class MainApplication(tk.Tk):
     def show_results(self) -> None: #Displays the voting result
         results = self.controller.get_results()
         messagebox.showinfo("Results", results)
+
+    def show_winner(self) -> None:
+        """
+        Displays the winner of the election.
+        """
+        try:
+            winner_message = self.controller.get_winner()
+            messagebox.showinfo("Winner", winner_message)
+        except Exception as e:
+            messagebox.showerror("Error", f"An error occurred: {e}")
 
     def reset_votes(self) -> None:
         """

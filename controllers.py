@@ -68,6 +68,32 @@ class ElectionController:
         """
         return [c.name for c in self.candidates]
 
+    def get_winner(self) -> str:
+        """
+        Determines the winner of the election.
+
+        Returns:
+            str: A message with the name of the winner
+                 A tie message for multiple winners
+                 A message no votes available
+        """
+        if not self.candidates:
+            return "No candidates are available."
+
+
+        max_votes = max(candidate.votes for candidate in self.candidates) # Finds the maximum number of votes
+
+
+        winners = [candidate.name for candidate in self.candidates if candidate.votes == max_votes]
+        # Finds all candidates with the maximum number of votes
+
+        if max_votes == 0:
+            return "No votes available."
+        elif len(winners) == 1:
+            return f"The winner is {winners[0]} with {max_votes} votes."
+        else:
+            return f"It's a tie between: {', '.join(winners)} with {max_votes} votes each."
+
     def reset_votes(self)-> None:
         """
         Resets the votes for all candidates.
