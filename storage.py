@@ -1,6 +1,6 @@
 import json
 from models import Candidate# Imports class
-from controllers import ElectionController
+# from controllers import ElectionController
 
 def save_data(controller) -> None:
     """
@@ -12,7 +12,9 @@ def save_data(controller) -> None:
         data = {candidate.name: candidate.votes for candidate in controller.candidates}
         json.dump(data, file)
 
-def load_data(controller: ElectionController) -> None:
+# def load_data(controller: ElectionController) -> None:
+
+def load_data(controller) -> None:
     """
     Loads the vote count from a JSON file.
     Expects the file format: {'candidate_name': votes}
@@ -27,8 +29,4 @@ def load_data(controller: ElectionController) -> None:
                 candidate.votes = votes
                 controller.candidates.append(candidate)
     except FileNotFoundError:
-        print('No previous data found')
-        pass
-    except json.JSONDecodeError:
-        print('Error: Corrupted data file')
         pass
